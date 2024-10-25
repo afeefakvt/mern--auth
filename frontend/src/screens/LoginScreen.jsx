@@ -5,6 +5,7 @@ import FormContainer from '../components/FormContainer'
 import { useDispatch,useSelector } from 'react-redux'
 import { useLoginMutation } from '../features/usersApiSlice'
 import { setCredentials } from '../features/authSlices'
+import { toast } from 'react-toastify';
 
 
 const LoginScreen = () => {
@@ -29,10 +30,14 @@ const LoginScreen = () => {
         e.preventDefault();
        try {
         const res = await login({email, password}).unwrap();
+        console.log('Login Response:', res); // Check the login response
+
         dispatch(setCredentials({...res}));
         navigate('/')
-       } catch (error) {
-        console.log(error?.date?.message||error.error);
+       } catch (err) {
+        console.error('Login Error:', err); // Log error to inspect
+
+        toast.error(err?.data?.message||err.error);
         
         
        }
@@ -47,7 +52,7 @@ const LoginScreen = () => {
                 <Form.Label>
                     Email Address
                 </Form.Label>
-                <Form.Control type='email' placeholder='Enter Email' value={email} onChange={(e)=>e.target.value}>
+                <Form.Control type='email' placeholder='Enter Email' value={email} onChange={(e)=>setEmail(e.target.value)}>
                 </Form.Control>
 
             </Form.Group>
@@ -56,11 +61,11 @@ const LoginScreen = () => {
                 <Form.Label>
                     Password
                 </Form.Label>
-                <Form.Control type='password' placeholder='Enter Password' value={password} onChange={(e)=>e.target.value}>
+                <Form.Control type='password' placeholder='Enter Password' value={password} onChange={(e)=>setPassword(e.target.value)}>
                 </Form.Control>
 
             </Form.Group>
-            <Button type='submit' variant='primary' className='mt-3'>
+            <Button disabled={isLoading} type='submit' variant='primary' className='mt-3'>
                 Sign In
             </Button>
 

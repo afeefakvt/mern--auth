@@ -8,7 +8,8 @@ import bcrypt from 'bcryptjs'
 const authUser = async (req, res) => {
     try {
         const { email, password } = req.body
-
+        console.log('Received email:', email);
+        console.log('Received password:', password); 
         const user = await User.findOne({ email })
 
         if (user && (await user.matchPassword(password))) {
@@ -42,11 +43,16 @@ const securePassword = async (password) => {
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body
+
+        if (!name.trim() || !email.trim() || !password.trim()) {
+            res.status(400).json({ message: 'fields cannot be empty' });
+            return;
+        }
         const userExists = await User.findOne({ email });
 
         if (userExists) {
-            res.status(400);
-            throw new Error('user already exists')
+            res.status(400).json({message:'user already exists'})
+            return;
         }
         const spassword = await securePassword(password)
         const user = new User({
