@@ -103,7 +103,7 @@ const registerUser = async (req,res)=>{
     }
 }
  
-//route GET/api/admin/userList
+//route GET/api/admin/users
 
 const getUsers = async(req,res)=>{
     try {

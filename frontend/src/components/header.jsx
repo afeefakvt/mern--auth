@@ -1,18 +1,23 @@
 import { Navbar, Nav, Container,NavDropdown,Badge } from 'react-bootstrap';
-import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaSignInAlt, FaSignOutAlt,FaUsers } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap'
 import { useSelector,useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from '../features/usersApiSlice';
 import { logout } from '../features/authSlices';
+import { adminLogout } from '../features/adminAuthSlice';
+import { useAdminLogoutMutation } from '../features/adminApiSlice';
+
 
 const Header = () => {
     const {userInfo} = useSelector((state)=>state.auth)
+    const {adminInfo} = useSelector((state)=>state.adminAuth)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [logoutApiCall] = useLogoutMutation();
+    const [adminLogoutApiCall] = useAdminLogoutMutation();
 
     const logoutHandler = async()=>{
         try {
@@ -23,20 +28,46 @@ const Header = () => {
             console.error(error)
         }
     }
+    console.log("Admin Info:", adminInfo);
+
+    const logoutAdmin = async(e)=>{
+        try {
+            await adminLogoutApiCall()
+            dispatch(adminLogout());
+            navigate('/admin/login')
+        } catch (error) {
+            console.error("Admin logout error:", error);
+
+            
+        }
+    }
+
     return (
         <header>
             <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
                 <Container>
-                    <LinkContainer to='/'>
-                        <Navbar.Brand>MERN App</Navbar.Brand>
-                    </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
                         <Nav className='ms-auto'>
-                            {userInfo?(
+                            {adminInfo ? (
+                                 <NavDropdown title={adminInfo.name} id='adminMenu'>
+                                 <NavDropdown.Item onClick={logoutAdmin}>
+                                     Logout
+                                 </NavDropdown.Item>
+                                 <LinkContainer to='/admin/users'>
+                                     <NavDropdown.Item>
+                                         Users
+                                     </NavDropdown.Item>
+                                 </LinkContainer>
+                                 <LinkContainer to='/admin/newUser'>
+                                     <NavDropdown.Item>Add User</NavDropdown.Item>
+                                 </LinkContainer>
+                             </NavDropdown>
+
+                            ) : userInfo ? (
                                 <>
                                   <NavDropdown title = {userInfo.name} id='username'>
-                                    <LinkContainer to='/profile'>
+                                   <LinkContainer to='/profile'>
                                     <NavDropdown.Item>Profile</NavDropdown.Item>
                                     </LinkContainer>
                                     <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
