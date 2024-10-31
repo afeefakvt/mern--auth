@@ -27,7 +27,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         updateUser:builder.mutation({
             query:(data)=>({
                 url:`${USERS_URL}/profile`,
-                method:'PuT',
+                method:'PUT',
                 body:data,
             }),
         }),

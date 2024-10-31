@@ -18,7 +18,7 @@ const authAdmin = async(req,res)=>{
 
         if(email===credentials.email&& password==credentials.password){
             const adminUser = {
-                _id:'admin123',
+                
                 name:'admin',
                 email:credentials.email
             }
@@ -107,6 +107,8 @@ const registerUser = async (req,res)=>{
 
 const getUsers = async(req,res)=>{
     try {
+        console.log("dgaschgavshzxnb ");
+        
         const users = await User.find()
         res.status(200).json(users)
 
@@ -119,18 +121,12 @@ const getUsers = async(req,res)=>{
 
 const getSingleUser = async (req,res)=>{
     try {
-        const id = req.params.id
-        const user = await User.findOne({_id:id})
-
-        if(user){
-            const userData = {
-                _id:user._id,
-                name:user.name,
-                email:user.email,
-                image:user.image
-            }
-            res.status(201).json({message:userData})
-        }
+       const user = await User.findById(req.params.id)
+       if(user){
+        res.json(user)
+       }else{
+            res.status(404).json({message:'user not found'})
+       }
 
     } catch (error) {
         res.status(500).json({message:'error occured'})
@@ -139,11 +135,8 @@ const getSingleUser = async (req,res)=>{
     }
 }
 
-//@desc update user profile
-//route PUT/api/users/profile
-//@access private
 
-const updateUserProfile  =async (req,res)=>{
+const updateUser  =async (req,res)=>{
     try {
 
         const id= req.params.id
@@ -152,20 +145,20 @@ const updateUserProfile  =async (req,res)=>{
         if(user){
             user.name = req.body.name||user.name
             user.email = req.body.email||user.email
-            if(req.body.password){
-                const salt = await bcrypt.genSalt(10);
-                user.password=await bcrypt.hash(req.body.password,salt)
-            }
-            if(req.body.image){
-                const image = req.body.image
-                user.image = image
-            }
+            // if(req.body.password){
+            //     const salt = await bcrypt.genSalt(10);
+            //     user.password=await bcrypt.hash(req.body.password,salt)
+            // }
+            // if(req.body.image){
+            //     const image = req.body.image
+            //     user.image = image
+            // }
             const updatedUser = await user.save()
             res.status(201).json({
                 _id:updatedUser._id,
                 name:updatedUser.name,
                 email:updatedUser.email,
-                image:updatedUser.image
+                // image:updatedUser.image
             })
         }else{
             res.status(401).json({message:'user not found'})
@@ -200,7 +193,7 @@ export{
     amdinLogout,
     getUsers,
     getSingleUser,
-    updateUserProfile,
+    updateUser,
     registerUser,
     deleteUser
 }
