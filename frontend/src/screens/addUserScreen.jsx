@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAddUserMutation } from '../features/adminApiSlice'
 import { Form,Button } from 'react-bootstrap'
 import FormContainer from '../components/FormContainer'
+import { toast } from 'react-toastify'; 
+
 
 const AddUserScreen = () => {
     const [name,setName] = useState('');
@@ -14,11 +16,25 @@ const AddUserScreen = () => {
 
     const handleSubmit = async(e)=>{
         e.preventDefault();
+
+
+        if (!name.trim()) {
+            toast.error('Name cannot be empty or whitespace.'); 
+            return;
+        }
+        if (!password.trim()) {
+            toast.error('Password cannot be empty or whitespace.'); 
+            return;
+        }
         try {
-            await addUser({name,email,password}).unwrap();
-            navigate('/admin/users')
+            await addUser({name,email,password}).unwrap(); //unwrap method is used to return the result directly or throw an error if the promise is rejected.
+            toast.success('User added successfully!'); 
+
+            navigate('/admin/userList')
         } catch (error) {
             console.error("Error adding user:", error);
+            toast.error('Failed to add user. Please try again.'); 
+
             
         }
     }

@@ -39,7 +39,7 @@ const AdminLogin = () => {
         // navigate('/admin/dashboard')
        
       } catch (error) {
-        toast.error(err?.date?.message || 'login failed')
+        toast.error(error?.data?.message || 'login failed')
     }
 }
 

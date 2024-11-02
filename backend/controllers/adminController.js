@@ -75,7 +75,8 @@ const registerUser = async (req,res)=>{
         const userExists = await User.findOne({email})
 
         if(userExists){
-            return res.status(401).json({message:'user already exists'})
+            return res.status(400).json({message:'user already exists'})
+            
         }
 
         const spassword = await securePassword(password)
@@ -94,7 +95,7 @@ const registerUser = async (req,res)=>{
                 email:user.email
             })
         }else{
-            res.status(401).json({message:'invalid user data'})
+            res.status(400).json({message:'invalid user data'})
         }
     } catch (error) {
     res.status(500).json({message:'error occured'})

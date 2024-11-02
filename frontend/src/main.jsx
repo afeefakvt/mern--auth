@@ -15,7 +15,6 @@ import AdminLogin from './screens/AdminLogin.jsx'
 import AdminDashboard from './screens/adminDashboard'
 import AddUserScreen from './screens/addUserScreen.jsx'
 import UserScreen from './screens/userScreen.jsx'
-import EditUserscreen from './screens/editUserscreen.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,7 +33,6 @@ const router = createBrowserRouter(
        <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
        <Route path='/admin/newUser' element={<AddUserScreen/>}/>
        <Route path='/admin/userList'  element={<UserScreen/>}/>
-       <Route path='/admin/editUser/:id' element={<EditUserscreen/>}/>
     </Route>
 )
 )

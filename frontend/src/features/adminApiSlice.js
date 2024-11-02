@@ -24,21 +24,6 @@ export const adminApiSlice = apiSlice.injectEndpoints({
                 body:data
             }),
         }),
-        getUser:builder.query({
-            query:(id)=>`${ADMIN_URL}/editUser/${id}`,
-            providesTags:(result,error,id)=>[{ type:'User',id}],
-
-        }),
-
-        updateUser:builder.mutation({
-            query:({id,...data})=>({
-                url:`${ADMIN_URL}/editUser/${id}`,
-                method:'PUT',
-                body:data,
-            })
-
-        }),
-
         deleteUser:builder.mutation({
             query:(userId)=>({
                 url:`${ADMIN_URL}/deleteUser/${userId}`,
@@ -49,4 +34,4 @@ export const adminApiSlice = apiSlice.injectEndpoints({
 })
 
 
-export const {useAdminLoginMutation,useAdminLogoutMutation,useAddUserMutation,useDeleteUserMutation,useGetUserQuery,useUpdateUserMutation} = adminApiSlice;
+export const {useAdminLoginMutation,useAdminLogoutMutation,useAddUserMutation,useDeleteUserMutation} = adminApiSlice;
