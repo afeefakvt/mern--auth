@@ -4,9 +4,12 @@ import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/header'
+import { useDispatch } from 'react-redux';
+import { setAdminCredentials } from './features/adminAuthSlice';
 
 const App = () => {
   const location = useLocation();
+  
  
     // Determine if the current path is the admin login route
     const isAdminLogin = location.pathname === '/admin/login' ; 

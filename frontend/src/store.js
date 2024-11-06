@@ -10,7 +10,9 @@ const store = configureStore({
         auth:authReducer,
         adminAuth:adminAuthReducer, 
         [apiSlice.reducerPath]:apiSlice.reducer,
-        [adminApiSlice.reducerPath]:adminApiSlice.reducer
+        [adminApiSlice.reducerPath]:adminApiSlice.reducer,
+    
+
     },  
     middleware:(getDefaultMiddleware)=> getDefaultMiddleware().concat(apiSlice.middleware,adminApiSlice.middleware),
     devTools: true,
