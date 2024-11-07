@@ -114,7 +114,7 @@ const updateUserProfile = async (req, res) => {
             user.email = req.body.email || user.email
             
             if (req.file) {
-                user.image = req.file.path; // Assuming you save the path in the user model
+                user.image = req.file.path; 
             }
             if(req.body.password){
                 const salt  = await bcrypt.genSalt(10);

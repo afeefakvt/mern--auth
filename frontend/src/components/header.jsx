@@ -28,11 +28,10 @@ const Header = () => {
             console.error(error)
         }
     }
-    console.log("Admin Info:", adminInfo);
 
     const logoutAdmin = async(e)=>{
         try {
-            await adminLogoutApiCall()
+            await adminLogoutApiCall().unwrap()
             dispatch(adminLogout());
             navigate('/admin/login')
         } catch (error) {
@@ -65,7 +64,9 @@ const Header = () => {
                              </NavDropdown>
 
                             ) : userInfo ? (
+                                
                                 <>
+
                                   <NavDropdown title = {userInfo.name} id='username'>
                                    <LinkContainer to='/profile'>
                                     <NavDropdown.Item>Profile</NavDropdown.Item>

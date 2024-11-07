@@ -40,6 +40,7 @@ const Profile = () => {
                 _id:userInfo._id,
                 name,
                 email,
+                image,
                 password
             }).unwrap();
             dispatch(setCredentials({...res}))

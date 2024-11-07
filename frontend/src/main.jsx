@@ -12,7 +12,7 @@ import {Provider} from 'react-redux'
 import Profile from './screens/Profile.jsx'
 import PrivateRoutes from './components/PrivateRoutes.jsx'
 import AdminLogin from './screens/AdminLogin.jsx'
-import AdminDashboard from './screens/adminDashboard'
+import AdminDashboard from './screens/AdminDashboard.jsx'
 import AddUserScreen from './screens/addUserScreen.jsx'
 import UserScreen from './screens/userScreen.jsx'
 

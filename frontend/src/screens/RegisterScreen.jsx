@@ -41,7 +41,9 @@ const RegisterScreen = () => {
         } else {
             try {
                 const res = await register({ name, email, password }).unwrap();
-                dispatch(setCredentials({ ...res }));
+                console.log('Registration Response:', res); // Log the response to debug
+
+                dispatch(setCredentials({ ...res.data }));
                 navigate('/')
             } catch (error) {
                 toast.error(error?.data?.message || error.error)
