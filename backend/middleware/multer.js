@@ -5,7 +5,7 @@ import path from "path"
 //configure multer storage
 const storage = multer.diskStorage({
     destination: function(req,file,cb){
-        cb(null, `${Date.now()}-${file.originalname}`);
+        cb(null, path.join(path.resolve(),'/uploads'));
     },
 });
 

@@ -1,4 +1,7 @@
 import express from 'express';
+import upload from '../middleware/multer.js';
+
+
 const router = express.Router();
 
 import { authUser,
@@ -11,7 +14,7 @@ import {protect} from '../middleware/authMiddleware.js'
 router.post('/',registerUser);
 router.post('/auth',authUser);
 router.post('/logout',logoutUser);
-router.route('/profile').get(protect,getUserProfile).put(protect,updateUserProfile);
+router.route('/profile').get(protect,getUserProfile).put(protect,upload.single('image'),updateUserProfile);
 
 export default router;
 

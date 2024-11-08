@@ -51,13 +51,13 @@ const AdminLogin = () => {
                 <Form.Group className='my-2' controlId='email'>
                     <Form.Label>Email</Form.Label>
                     <Form.Control type='email' placeholder='enter email'
-                    value={email} onChange={(e)=>setEmail(e.target.value)} required/>
+                    value={email} onChange={(e)=>setEmail(e.target.value)} />
 
                 </Form.Group>
                 <Form.Group className='my-2' controlId='password'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control type='password' placeholder='enter password'
-                    value={password} onChange={(e)=>setPassword(e.target.value)} required/>
+                    value={password} onChange={(e)=>setPassword(e.target.value)} />
 
                 </Form.Group>
                 <Button type='submit' variant='primary' className='mt-3'>Login</Button>

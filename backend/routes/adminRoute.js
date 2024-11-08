@@ -20,11 +20,11 @@ import {
 
  router.post('/login',authAdmin);
  router.post('/logout',amdinLogout);
- router.post('/newUser',registerUser);
- router.get('/userList',getUsers);
+ router.post('/newUser',protect,registerUser);
+ router.get('/userList',protect,getUsers);
  router.get('/editUser/:id',protect,getSingleUser);
  router.put('/editUser/:id',protect,updateUser);
- router.delete('/deleteUser/:id',deleteUser)
+ router.delete('/deleteUser/:id',protect,deleteUser)
 
  
 export default router;        

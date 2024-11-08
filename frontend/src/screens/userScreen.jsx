@@ -153,7 +153,7 @@ const UserScreen = () => {
                                 placeholder='Enter name'
                                 value={selectedUser.name}
                                 onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
-                                required
+                            
                             />
                         </Form.Group>
                         <Form.Group controlId='formUserEmail'>
@@ -163,7 +163,7 @@ const UserScreen = () => {
                                 placeholder='Enter email'
                                 value={selectedUser.email}
                                 onChange={(e) => setSelectedUser({ ...selectedUser, email: e.target.value })}
-                                required
+                                
                             />
                         </Form.Group>
                         <Button variant='primary' type='submit' className='mt-3'>

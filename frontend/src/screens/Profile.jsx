@@ -23,26 +23,30 @@ const Profile = () => {
 
     const {userInfo} = useSelector((state)=>state.auth)
     const dispatch = useDispatch();
-    const [updateProfile,{isLoading}] = useUpdateUserMutation();
+    const [updateProfile] = useUpdateUserMutation();
 
     useEffect(()=>{
         setName(userInfo.name);
         setEmail(userInfo.email);
-    },[userInfo.name,userInfo.email])
+        setImage(userInfo.image||null)
+    },[userInfo.name,userInfo.email,userInfo.image])
 
     const submitHandler =async(e)=>{
         e.preventDefault()
     if(password!==confirmPassword){
         toast.error('Passwords do not match')
+        return;
     }else{
         try {
-            const res = await updateProfile({
-                _id:userInfo._id,
-                name,
-                email,
-                image,
-                password
-            }).unwrap();
+
+            const formData = new FormData()
+            formData.append('_id',userInfo._id)
+            formData.append('name', name);
+            formData.append('email', email);
+            if (image) formData.append('image', image);
+            if (password) formData.append('password', password);
+    
+            const res = await updateProfile(formData).unwrap();
             dispatch(setCredentials({...res}))
             navigate('/')
             toast.success('profile updated successfully')
@@ -54,37 +58,12 @@ const Profile = () => {
     }
 
 
-
-    // const submitHandler = async (e) => {
-    //     e.preventDefault();
-    //     if (password !== confirmPassword) {
-    //         toast.error('Passwords do not match');
-    //     } else {
-    //         const formData = new FormData();
-    //         formData.append('_id', userInfo._id);
-    //         formData.append('name', name);
-    //         formData.append('email', email);
-    //         formData.append('password', password);
-    //         if (image) {
-    //             formData.append('image', image); // Append the image file
-    //         }
-
-    //         try {
-    //             const res = await updateProfile(formData).unwrap();
-    //             dispatch(setCredentials({ ...res }));
-    //             toast.success('Profile updated successfully');
-    //         } catch (error) {
-    //             toast.error(error?.data?.message || error.error);
-    //         }
-    //     }
-    // };
-
   return (
 
     <FormContainer>
         <h1>Update Profile</h1>
              <img
-                    src={image ? URL.createObjectURL(image) : defaultAvatar}
+                    src={userInfo.image?userInfo.image : defaultAvatar}
                     alt="Profile"
                     className="rounded-circle"
                     width="130"
@@ -136,15 +115,6 @@ const Profile = () => {
                 Update
             </Button>
         </Form>
-        {userInfo.image && (
-                <img
-                    src={userInfo.image}
-                    alt='Profile'
-                    style={{ width: '100px', borderRadius: '50%', marginTop: '20px' }}
-                />
-            )}
-
-
     </FormContainer>
   )
 }

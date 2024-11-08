@@ -18,7 +18,7 @@ export const adminAuthSlice = createSlice({
             state.adminInfo = null
             localStorage.removeItem('adminInfo')
         }
-    }
+    }   
 })
 
 export const {setAdminCredentials,adminLogout} = adminAuthSlice.actions

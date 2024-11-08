@@ -5,9 +5,11 @@ dotenv.config();
 import cors from 'cors';
 import { notFound,errorHandler } from './middleware/errorMiddleware.js';
 import mongoose from 'mongoose';
+import path from 'path';
 const port = process.env.PORT || 5000
 import userRoutes from './routes/userRoute.js'
 import adminRoutes from './routes/adminRoute.js'
+
 
 
 const app = express()
@@ -19,6 +21,9 @@ app.use(cookieParser()) // Parse cookies first
 
 app.use('/api/users',userRoutes)// Routes come after
 app.use('/api/admin',adminRoutes)
+
+
+app.use('/uploads', express.static(path.join(path.resolve(), 'uploads')));
 
 app.use(cors({
     origin:'http://localhost:3000',

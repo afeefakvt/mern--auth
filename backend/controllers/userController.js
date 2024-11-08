@@ -96,6 +96,7 @@ const getUserProfile = async (req, res) => {
             _id:req.user._id,
             name:req.user.name,
             email:req.user.email,
+            image:req.user.image?`${process.env.BASE_URL}${req.user.image}` : null
         }
         res.status(200).json(user)
 
@@ -114,7 +115,7 @@ const updateUserProfile = async (req, res) => {
             user.email = req.body.email || user.email
             
             if (req.file) {
-                user.image = req.file.path; 
+                user.image =  `/uploads/${req.file.filename}`; 
             }
             if(req.body.password){
                 const salt  = await bcrypt.genSalt(10);
@@ -127,8 +128,7 @@ const updateUserProfile = async (req, res) => {
                 _id:updatedUser._id,
                 name: updatedUser.name,
                 email:updatedUser.email,
-                image:updatedUser.image
-
+                image: `${process.env.BASE_URL}${updatedUser.image}`
             });
         }else{
             res.status(404);
